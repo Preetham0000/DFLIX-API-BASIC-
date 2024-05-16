@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>In Theatre</title>
+    <link rel="stylesheet" href="Theatre.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1>In Theatres</h1>
+    <div class="arrow left-arrow"><i class="fas fa-chevron-left"></i></div>
+    <div id="movieContainer" class="movie-container">
+         
+    </div>
+    <div class="arrow right-arrow"><i class="fas fa-chevron-right"></i></div>
+    <script>
+        const API_URL = 'http://5.254.6.120:5000/api/v1/nsup/NowShowing';
+
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(movies => {
+                const movieContainer = document.getElementById('movieContainer');
+                for (let i = 0; i < 5 && i < movies.length; i++) {
+                    const movie = movies[i];
+                    const movieElement = document.createElement('div');
+                    movieElement.classList.add('movie');
+                    movieElement.innerHTML = `
+                        <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="${movie.title}"
+                        <p>${movie.title}</p>
+                        <p>${movie.rating}/10</p>
+                    `;
+                    movieContainer.appendChild(movieElement);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
